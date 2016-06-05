@@ -1,6 +1,6 @@
 var data = [];
 var score = 0;
-var subredditList = ["askreddit", "askscience", "aww", "creepy", "dataisbeautiful", "earthporn", "food", "funny", "futurology", "getmotivated", "gifs", "internetisbeautiful", "jokes", "lifeprotips", "mildlyinteresting", "nosleep", "nottheonion", "pics", "science", "showerthoughts", "twoxchromosomes", "upliftingnews", "mildlyinfuriating", "engineeringporn", "mechanical_gifs", "techsupportgore", "shittyrobots", "cablefail", "shittylifehacks", "oddlysatisfying", "sweatypalms", "heavyseas"];
+var subredditList = ["askreddit", "askscience", "aww", "creepy", "dataisbeautiful", "earthporn", "food", "funny", "futurology", "getmotivated", "gifs", "internetisbeautiful", "jokes", "lifeprotips", "mildlyinteresting", "nosleep", "nottheonion", "pics", "science", "showerthoughts", "twoxchromosomes", "upliftingnews", "mildlyinfuriating", "engineeringporn", "mechanical_gifs", "techsupportgore", "shittyrobots", "cablefail", "shittylifehacks", "oddlysatisfying", "sweatypalms", "heavyseas", "subredditsimulator"];
 
 var topList = ["day", "week", "month", "year", "all"];
 
@@ -38,12 +38,12 @@ function displayResults() {
 
   var html = "";
   html += '<li>';
-  html += '<div class="topic-title"><h2>' + topic.title + '</h2></div>';
-  html += '<div class="topic-ups">' + topic.ups + '</div>';
-  if ( (topic.thumbnail.length > 0) && (topic.thumbnail != "self" || topic.thumbnail != "default") ) {
-    html += '<a href="' + topic.url + '" target="_blank"><img src="' + topic.thumbnail + '"></a>';
+  html += '<div class="topic-ups">Upvotes: ' + topic.ups + '</div>';
+  if ( (topic.thumbnail.length > 0) && (topic.thumbnail != "self") ) {
+    html += '<div class="topic-thumbnail"><a href="' + topic.url + '" target="_blank"><img src="' + topic.thumbnail + '"></a></div>';
   }
-  html += '<div class="topic-subreddit"><p>' + topic.subreddit + '</p></div>';
+  html += '<div class="topic-title"><h2>' + topic.title + '</h2></div>';
+  // html += '<div class="topic-subreddit"><p>' + topic.subreddit + '</p></div>';
   html += '</li>'
   $el.append(html);
 
@@ -84,17 +84,22 @@ function fetchResults() {
 
 function submitForm() {
   $('#subreddit-guess-form').on('submit', function(e) {
+    $(":submit").attr("disabled", true);
     e.preventDefault();
     debugger;
     if ($('input:checked').val() === topic.subreddit.toLowerCase()) {
       score += 1;
-      console.log("correct");
+      $('#response').text('Correct!').css({'color': 'green'});
     } else {
       score -= 1;
-      console.log("incorrect");
+      $('#response').text('Wrong :(').css({'color': 'red'});
     }
     $('#score').text(score);
-    fetchResults();
+    setTimeout(function() {
+      $('#response').text('');
+      fetchResults();
+      $(":submit").removeAttr("disabled");
+    }, 2000);
   });
 }
 
