@@ -3,4 +3,44 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .list-unstyled {
   list-style: none;
+
+  li {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 100px;
+    align-items: center;
+
+    .topic-ups {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .topic-thumbnail {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .topic-title {
+      margin-left: 10px;
+      margin-right: 10px;
+
+      h2 {
+        margin: 0;
+      }
+    }
+  }
+}
+
+#new {
+  clear: both;
+}
+
+.self {
+  background-image: url(https://www.redditstatic.com/sprite-reddit.ZDiVRxCXXWg.png);
+  background-position: -0px -486px;
+  background-repeat: no-repeat;
+  height: 61px;
+  width: 50px;
+  display: block;
 }

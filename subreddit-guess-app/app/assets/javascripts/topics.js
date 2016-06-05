@@ -40,7 +40,9 @@ function displayResults() {
   html += '<li>';
   html += '<div class="topic-ups">Upvotes: ' + topic.ups + '</div>';
   if ( (topic.thumbnail.length > 0) && (topic.thumbnail != "self") ) {
-    html += '<div class="topic-thumbnail"><a href="' + topic.url + '" target="_blank"><img src="' + topic.thumbnail + '"></a></div>';
+    html += '<div class="topic-thumbnail"><a href="' + topic.url + '" target="_blank"><img src="' + topic.thumbnail + '" height="100px"></a></div>';
+  } else {
+    html += '<div class="topic-thumbnail"><a href="#" class="self"></a></div>';
   }
   html += '<div class="topic-title"><h2>' + topic.title + '</h2></div>';
   // html += '<div class="topic-subreddit"><p>' + topic.subreddit + '</p></div>';
@@ -86,7 +88,6 @@ function submitForm() {
   $('#subreddit-guess-form').on('submit', function(e) {
     $(":submit").attr("disabled", true);
     e.preventDefault();
-    debugger;
     if ($('input:checked').val() === topic.subreddit.toLowerCase()) {
       score += 1;
       $('#response').text('Correct!').css({'color': 'green'});
