@@ -1,0 +1,41 @@
+<div class="wrapper">
+    <div id="index" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Guess the subreddit!</h1>
+            </div>
+            <div class="col-md-4 text-right">
+                <div class="actions">
+                    <button id="add-post" class="btn btn-primary">Add Article</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="list-unstyled" id="subreddit-topics">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="new" class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h1>Add a New Article</h1>
+                <form id="new-article-form">
+                    <div class="form-group">
+                        <label for="headline">Headline</label>
+                        <input type="text" id="headline" placeholder="headline" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Body</label>
+                        <textarea class="form-control" id="body"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create Article</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
