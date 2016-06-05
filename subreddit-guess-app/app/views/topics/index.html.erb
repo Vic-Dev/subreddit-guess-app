@@ -4,11 +4,6 @@
             <div class="col-md-8">
                 <h1>Guess the subreddit!</h1>
             </div>
-            <div class="col-md-4 text-right">
-                <div class="actions">
-                    <button id="add-post" class="btn btn-primary">Add Article</button>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
@@ -17,22 +12,15 @@
             </div>
         </div>
     </div>
-
     <div id="new" class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <h1>Add a New Article</h1>
-                <form id="new-article-form">
-                    <div class="form-group">
-                        <label for="headline">Headline</label>
-                        <input type="text" id="headline" placeholder="headline" class="form-control" required>
+                <h2>Score: <span id="score">0</span></h2>
+                <form id="subreddit-guess-form">
+                    <div class="form-group" id="subreddit-options">
                     </div>
                     <div class="form-group">
-                        <label for="body">Body</label>
-                        <textarea class="form-control" id="body"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Create Article</button>
+                        <button type="submit" class="btn btn-primary">Submit guess</button>
                     </div>
                 </form>
             </div>

@@ -1,12 +1,38 @@
 var data = [];
+var score = 0;
+var subredditList = ["askreddit", "askscience", "aww", "creepy", "dataisbeautiful", "earthporn", "food", "funny", "futurology", "getmotivated", "gifs", "internetisbeautiful", "jokes", "lifeprotips", "mildlyinteresting", "nosleep", "nottheonion", "pics", "science", "showerthoughts", "twoxchromosomes", "upliftingnews", "mildlyinfuriating", "engineeringporn", "mechanical_gifs", "techsupportgore", "shittyrobots", "cablefail", "shittylifehacks", "oddlysatisfying", "sweatypalms", "heavyseas"];
+
+var topList = ["day", "week", "month", "year", "all"];
+
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
 
 function displayResults() {
   var $el = $('#subreddit-topics');
   $el.html('');
+  var $opts = $('#subreddit-options');
+  $opts.html('');
 
   data = data.data.children;
 
-  index = Math.floor(Math.random()*data.length);
+  var index = Math.floor(Math.random()*data.length);
 
   topic = data[index].data;
 
@@ -14,34 +40,31 @@ function displayResults() {
   html += '<li>';
   html += '<div class="topic-title"><h2>' + topic.title + '</h2></div>';
   html += '<div class="topic-ups">' + topic.ups + '</div>';
-  if (topic.thumbnail.length > 0) {
+  if ( (topic.thumbnail.length > 0) && (topic.thumbnail != "self" || topic.thumbnail != "default") ) {
     html += '<a href="' + topic.url + '" target="_blank"><img src="' + topic.thumbnail + '"></a>';
   }
   html += '<div class="topic-subreddit"><p>' + topic.subreddit + '</p></div>';
   html += '</li>'
   $el.append(html);
 
-  // data.forEach(function(topic) {
-  //   topic = topic.data;
-  //   var html = "";
-  //   html += '<li>';
-  //   html += '<div class="topic-title"><h2>' + topic.title + '</h2></div>';
-  //   html += '<div class="topic-ups">' + topic.ups + '</div>';
-  //   html += '<img src="' + topic.thumbnail + '">';
-  //   html += '<div class="topic-subreddit"><p>' + topic.subreddit + '</p></div>';
-  //   html += '<div class="topic-url"><a href="' + topic.url + '">URL</div>';
-  //   html += '</li>'
-  //   $el.append(html);
-  // });
+  var subreddit = topic.subreddit.toLowerCase();
+
+  var subredditIndex = subredditList.indexOf(subreddit);
+  subredditList.splice(subredditIndex, 1);
+  shuffle(subredditList);
+
+  var guessList = [subredditList[0], subredditList[1], subredditList[3], subreddit];
+  shuffle(guessList);
+
+  guessList.forEach(function(guess) {
+    var htmlForm = "";
+    htmlForm += '<div><input type="radio" name="sub" value="' + guess + '" id="' + guess + '"><label for="' + guess + '">' + guess + '</label></div>';
+    $opts.append(htmlForm);
+  });
+
 };
 
 function fetchResults() {
-  // What subreddits to include?
-  // mildlyinteresting, Art, AskReddit askscience aww creepy dataisbeautiful DIY EarthPorn explainlikeimfive food funny Futurology GetMotivated gifs IAmA InternetIsBeautiful Jokes LifeProTips mildlyinteresting nosleep nottheonion photoshopbattles pics science Showerthoughts tifu todayilearned TwoXChromosomes UpliftingNews
-
-  var subredditList = ["askreddit", "askscience", "aww", "creepy", "dataisbeautiful", "EarthPorn", "food", "funny", "Futurology", "getmotivated", "gifs", "internetisbeautiful", "jokes", "lifeprotips", "mildlyinteresting", "nosleep", "nottheonion", "photoshopbattles", "pics", "science", "showerthoughts", "twoxchromosomes", "upliftingnews", "mildlyinfuriating", "engineeringporn", "mechanical_gifs", "techsupportgore", "shittyrobots", "cablefail", "shittylifehacks", "oddlysatisfying", "sweatypalms", "heavyseas"];
-
-  var topList = ["day", "week", "month", "year", "all"];
 
   var subreddit = subredditList[Math.floor(Math.random()*subredditList.length)];
 
@@ -59,10 +82,28 @@ function fetchResults() {
   });
 };
 
+function submitForm() {
+  $('#subreddit-guess-form').on('submit', function(e) {
+    e.preventDefault();
+    debugger;
+    if ($('input:checked').val() === topic.subreddit.toLowerCase()) {
+      score += 1;
+      console.log("correct");
+    } else {
+      score -= 1;
+      console.log("incorrect");
+    }
+    $('#score').text(score);
+    fetchResults();
+  });
+}
+
 
 $(document).on('page:change', function() {
   // fetch initial data
   fetchResults();
-  var article = {
-  }
+  submitForm();
+  // $('#subreddit-guess-form').on('submit', function(e) {
+  //   if $('#subreddit').val() === topic.subreddit
+  // })
 });
