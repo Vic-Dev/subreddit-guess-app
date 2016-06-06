@@ -93,10 +93,12 @@ function submitForm() {
       $('#response').text('Correct!').css({'color': 'green'});
     } else {
       score -= 1;
-      $('#response').text('Wrong :(').css({'color': 'red'});
+      $('#response').text('Wrong :(.').css({'color': 'red'});
+      $('#answer').text('The subreddit is: ' + topic.subreddit);
     }
     $('#score').text(score);
     setTimeout(function() {
+      $('#answer').text('');
       $('#response').text('');
       fetchResults();
       $(":submit").removeAttr("disabled");
